@@ -1,0 +1,120 @@
+from random import randint
+
+class Pokemon:
+    def __init__ (self, nome, tipo, HP, ataque, forcaMin, forcaMax):
+        self.nome = nome
+        self.tipo = tipo
+        self.HP = HP
+        self.ataque = ataque
+        self.forcaMin = forcaMin
+        self.forcaMax = forcaMax
+
+    def dano_recebido (self, dano):
+        self.HP -= dano
+
+class Eletrico(Pokemon):
+    def __init__(self, nome, tipo, HP, ataque, forcaMin, forcaMax):
+        super().__init__(nome, tipo, HP, ataque, forcaMin, forcaMax)
+
+        self._tipo = "Elétrico"
+        self._ataque = "Choque do trovão"
+
+class Fogo(Pokemon):
+    def __init__(self, nome, tipo, HP, ataque, forcaMin, forcaMax):
+        super().__init__(nome, tipo, HP, ataque, forcaMin, forcaMax)
+
+        self._tipo = "Fogo"
+        self._ataque = "Lança chamas"
+
+class Aquatico(Pokemon):
+    def __init__(self, nome, tipo, HP, ataque, forcaMin, forcaMax):
+        super().__init__(nome, tipo, HP, ataque, forcaMin, forcaMax)
+
+        self._tipo = "Aquatico"
+        self._ataque = "Jato de água"
+
+class Grama(Pokemon):
+    def __init__(self, nome, tipo, HP, ataque, forcaMin, forcaMax):
+        super().__init__(nome, tipo, HP, ataque, forcaMin, forcaMax)
+
+        self._tipo = "Grama"
+        self._ataque = "Folhas navalha"
+
+#pokemons disponiveis
+pikachu = Pokemon("Pikachu", "Elétrico", 100, "Choque do trovão", 10, 45)
+charmander = Pokemon("Charmander", "Fogo", 80, "Lança chamas", 15, 50)
+squirtle = Pokemon("Squirtle", "Aquatico", 120, "Jato de água", 15, 30)
+bulbassauro = Pokemon("Bulbassauro", "Grama", 70, "Folhas navalha", 40, 40)
+jogadorInicial = {1: pikachu, 2: charmander, 3: squirtle, 4: bulbassauro}
+inicialRival = {1: charmander, 2: squirtle, 3: bulbassauro, 4: pikachu}
+
+while True:
+    pkInicial = int (input ('''
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+    \n► (1) Pikachu\n► (2) Charmander\n► (3) Squirtle\n► (4) Bulbassauro
+    \n► Escolha um Pokémon para iniciar sua jornada: '''))
+    
+    if pkInicial > 4 or pkInicial < 1:
+        print('''
+♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦
+♦            !Escolha um número válido!            ♦
+♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦''')
+    else:
+        break
+
+for i in range (1,4):
+    if pkInicial == i:
+        self_pokemon = jogadorInicial[i]
+        rival_pokemon = inicialRival[i]
+
+print (f'''
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+Você escolheu o {jogadorInicial[pkInicial].nome}!''')
+
+print ('''
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+Um treinador adversário quer batalhar!''')
+
+print (f'''
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+Vai, {self_pokemon.nome}!''')
+
+print (f'''
+■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+
+O treinador adversário mandou o {rival_pokemon.nome}!''')
+
+while self_pokemon.HP > 0 and rival_pokemon.HP > 0:
+
+    while True:
+        movimento = int(input (f'\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n(1) Ataque (2) Defesa\n\nQual movimento {self_pokemon.nome} deve realizar? '''))
+
+        if movimento >2 or movimento <1:
+            print ('\n♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦\n♦            !Escolha um número válido!            ♦\n♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦♦''')
+        else:
+            break
+
+    if movimento == 1:
+        rival_pokemon.HP -= randint (self_pokemon.forcaMin, self_pokemon.forcaMax)
+        print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{self_pokemon.nome} atacou com {self_pokemon.ataque}! {rival_pokemon.nome} tem {rival_pokemon.HP} de HP restantes!''')
+        if rival_pokemon.HP <=0: 
+            break
+    else:
+        print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{self_pokemon.nome} passou a vez!''')
+    ataqueRival = randint(1, 2)
+
+    if ataqueRival == 1:
+        self_pokemon.HP -= randint (rival_pokemon.forcaMin, rival_pokemon.forcaMax)
+        print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{self_pokemon.nome} foi atacado com {rival_pokemon.ataque}! {self_pokemon.nome} tem {self_pokemon.HP} de HP restantes!''')
+        if self_pokemon.HP <=0: 
+            break
+    else:
+        print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{rival_pokemon.nome} passou a vez!''')
+
+if self_pokemon.HP <= 0:
+    print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{self_pokemon.nome} foi derrotado! Você perdeu!''')
+elif rival_pokemon.HP <= 0:
+    print (f'''\n■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n\n{rival_pokemon.nome} foi derrotado! Você venceu!''')
